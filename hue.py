@@ -55,7 +55,7 @@ if len(sys.argv) > 1:
 	users = []
 
 	find_hues_range(sys.argv[1])
-	print(str(len(hues)) + " hue(s) found:")
+	print(str(len(hues)) + " bridge(s) found:")
 	
 	for hue in hues:
 		print(hue['mac'] + " (" + hue['ip'] + ")")
