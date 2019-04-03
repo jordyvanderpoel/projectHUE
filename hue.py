@@ -13,7 +13,7 @@ def find_hues_range(ip):
 	
 	answered = sc.srp(arp_req_broad, timeout=1, verbose=False)[0]
 	for c in answered:
-		if c[1].hwsrc[:8] == "00:17:88":
+		if (len(sys.argv) <= 2 and c[1].hwsrc[:8] == "00:17:88") or (len(sys.argv) > 2 and c[1].hwsrc == sys.argv[2]):
 			client_dict = {"ip": c[1].psrc, "mac": c[1].hwsrc}
 			hues.append(client_dict)
 	return
@@ -55,7 +55,8 @@ if len(sys.argv) > 1:
 	users = []
 
 	find_hues_range(sys.argv[1])
-	print(str(len(hues)) + " hue(s) found")
+	print(str(len(hues)) + " hue(s) found:")
 	
 	for hue in hues:
+		print(hue['mac'] + " (" + hue['ip'] + ")")
 		sc.sniff(filter="ip and host " + hue['ip'], prn=handle_package, store=0)
